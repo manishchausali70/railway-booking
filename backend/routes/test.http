@@ -1,0 +1,32 @@
+### Register a New User
+POST http://localhost:3000/api/user/register
+Content-Type: application/json
+
+{
+    "username": "newuser123",
+    "password": "testpass",
+    "contactInfo": "1234567890"
+}
+
+### Login with New User
+POST http://localhost:3000/api/user/login
+Content-Type: application/json
+
+{
+    "username": "newuser123",
+    "password": "testpass"
+}
+
+### Get User Profile
+GET http://localhost:3000/api/user/profile/12
+
+### Update User Profile
+PUT http://localhost:3000/api/user/profile/12
+Content-Type: application/json
+
+{
+    "contactInfo": "9876543210"
+}
+
+### Delete User
+DELETE http://localhost:3000/api/user/profile/12

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Trains</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Railway Tracking System</h1>
+        <nav>
+            <ul>
+                <li><a href="booking.html">Book a Seat</a></li>
+                <li><a href="tracking.html">Track a Train</a></li>
+                <li><a href="../index.html">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Search for Trains</h2>
+        <form id="searchForm">
+            <label for="from">From:</label>
+            <input type="text" id="from" name="from" required>
+            <label for="to">To:</label>
+            <input type="text" id="to" name="to" required>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+            <button type="submit">Search</button>
+        </form>
+        <div id="searchResults"></div>
+    </main>
+    <footer>
+        <p>&copy; 2023 Railway Tracking System</p>
+    </footer>
+    <script src="../../public/js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Railway Booking</title>
+    <link rel="stylesheet" href="../../public/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Book Your Train Ticket</h1>
+        <form id="bookingForm">
+            <label for="trainNumber">Train Number:</label>
+            <input type="text" id="trainNumber" name="trainNumber" required>
+
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" required>
+
+            <label for="seatNumber">Seat Number:</label>
+            <input type="text" id="seatNumber" name="seatNumber" required>
+
+            <button type="submit">Book Now</button>
+        </form>
+        <div id="bookingMessage"></div>
+    </div>
+
+    <script src="../../public/js/scripts.js"></script>
+</body>
+</html>

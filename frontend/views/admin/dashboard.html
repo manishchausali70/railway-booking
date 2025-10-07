@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Railway Tracking System</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="manageTrains.html">Manage Trains</a></li>
+                <li><a href="../passenger/search.html">Search Trains</a></li>
+                <li><a href="../passenger/tracking.html">Track Trains</a></li>
+                <li><a href="../index.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Train Management</h2>
+            <p>Use the options below to manage train schedules and bookings.</p>
+            <button onclick="window.location.href='manageTrains.html'">Add/Remove Trains</button>
+            <button onclick="window.location.href='../passenger/booking.html'">View Bookings</button>
+        </section>
+        <section>
+            <h2>Real-Time Tracking</h2>
+            <p>Monitor train statuses and locations in real-time.</p>
+            <button onclick="window.location.href='../passenger/tracking.html'">Track Trains</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Railway Tracking System. All rights reserved.</p>
+    </footer>
+    <script src="../public/js/scripts.js"></script>
+</body>
+</html>

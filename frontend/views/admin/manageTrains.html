@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Trains</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Trains</h1>
+        <form id="manageTrainForm">
+            <div>
+                <label for="trainNumber">Train Number:</label>
+                <input type="text" id="trainNumber" name="trainNumber" required>
+            </div>
+            <div>
+                <label for="trainName">Train Name:</label>
+                <input type="text" id="trainName" name="trainName" required>
+            </div>
+            <div>
+                <label for="schedule">Schedule:</label>
+                <input type="text" id="schedule" name="schedule" required>
+            </div>
+            <button type="submit">Add Train</button>
+        </form>
+
+        <h2>Existing Trains</h2>
+        <table id="trainsTable">
+            <thead>
+                <tr>
+                    <th>Train Number</th>
+                    <th>Train Name</th>
+                    <th>Schedule</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Train data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="../public/js/scripts.js"></script>
+</body>
+</html>
