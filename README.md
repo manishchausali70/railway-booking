@@ -1,23 +1,17 @@
-# Railway Tracking System
+# Railway Booking (SQL backend + React Vite Frontend)
 
-## Overview
-The Railway Tracking System is a web-based application designed to address the challenges faced by Indian Railways, including unclear schedules, booking errors, and lack of real-time tracking. This system provides a user-friendly interface for passengers to search for trains, book seats, and track train statuses in real-time. Additionally, it offers an admin dashboard for managing trains and schedules effectively.
+- Modernized full-stack app with:
+- Backend: Node.js, Express, Mongoose (MongoDB Atlas or local), JWT auth (access + refresh with HttpOnly cookie)
+- Frontend: React (Vite) + Tailwind, React Router, Axios
 
-## Features
-- **Seat Booking**: Users can easily book seats on available trains.
-- **Booking Cancellation**: Users can cancel their bookings with a simple interface.
-- **Real-Time Tracking**: Passengers can track the current status and location of trains.
-- **Admin Dashboard**: Admins can manage train schedules, add or remove trains, and oversee bookings.
-- **Data Validation**: The system ensures data integrity through SQL constraints and transactions.
+Features
+- Role-based login (User/Admin)
+- User: Search trains, Book ticket, Search by PNR
+- Admin: Manage trains, View passengers (bookings)
 
-## Technology Stack
-- **Backend**: Node.js, Express.js, MySQL
-- **Frontend**: HTML, CSS, JavaScript
-- **Database**: MySQL
-
-## Project Structure
+Project Structure
 ```
-railway-tracking-system
+railway-booking
 ├── backend
 │   ├── controllers
 │   ├── models
@@ -25,42 +19,79 @@ railway-tracking-system
 │   ├── db
 │   ├── utils
 │   └── server.js
-├── frontend
-│   ├── public
-│   ├── views
+├── frontend (Vite React app)
+│   ├── src
+│   ├── index.html
 │   └── package.json
 └── README.md
 ```
 
-## Setup Instructions
-1. **Clone the Repository**: 
-   ```
-   git clone <repository-url>
-   cd railway-tracking-system
-   ```
+Quick start (Windows PowerShell)
 
-2. **Backend Setup**:
-   - Navigate to the `backend` directory.
-   - Install dependencies:
-     ```
-     npm install
-     ```
-   - Set up the MySQL database using the `schema.sql` file located in the `db` directory.
-   - Start the server:
-     ```
-     node server.js
-     ```
+1) MySQL setup
+- Create a database (default name): railway_tracking_system
+- Set environment variables via .env file (see below)
+-- This repo now uses MongoDB. If you run against MongoDB Atlas, set `MONGODB_URI` in `backend/.env`. The backend will create collections automatically.
 
-3. **Frontend Setup**:
-   - Navigate to the `frontend` directory.
-   - Install dependencies:
-     ```
-     npm install
-     ```
-   - Open `index.html` in a web browser to access the application.
+Detailed MySQL commands (PowerShell)
+1. Start MySQL server (if not already running). Use MySQL Workbench or Windows Services.
+2. From PowerShell (mysql client must be in PATH):
 
-## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+```powershell
+# create database (replace password prompt value when asked)
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS railway_tracking_system;"
 
-## License
-This project is licensed under the MIT License.
+# run the schema file (adjust path to your repo)
+mysql -u root -p railway_tracking_system < .\backend\db\schema.sql
+```
+
+If you prefer GUI tools, open `backend/db/schema.sql` in MySQL Workbench and run the statements.
+
+2) Backend
+```
+cd backend
+ni .env -ItemType File
+# Open .env in editor and add values like:
+# DB_NAME=railway_tracking_system
+# DB_USER=root
+# DB_PASS=your_mysql_password
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# FRONTEND_ORIGIN=http://localhost:5173
+# ACCESS_SECRET=replace_with_strong_secret
+# REFRESH_SECRET=replace_with_strong_secret
+
+npm install
+npm start
+```
+The server starts on http://localhost:3000
+
+3) Frontend (Vite React)
+```
+cd ../frontend
+npm install
+npm run dev
+```
+Open the shown URL (default http://localhost:5173)
+
+API overview
+- POST /api/auth/register {username,password,role?}
+- POST /api/auth/login {username,password}
+- POST /api/auth/refresh (uses HttpOnly cookie)
+- POST /api/auth/logout
+- GET  /api/admin/trains (public list)
+- POST /api/admin/addTrain (admin)
+- DELETE /api/admin/removeTrain/:trainId (admin)
+- PUT /api/admin/updateSchedule/:trainId (admin)
+- GET  /api/admin/passengers (admin)
+- POST /api/booking/book {userId, seatNumber, trainNumber or trainId}
+- GET  /api/booking/:bookingId
+- PUT  /api/booking/update/:bookingId {seatNumber}
+- DELETE /api/booking/cancel/:bookingId
+- GET  /api/booking/pnr/:pnr
+- GET  /api/tracking/track/:trainId
+
+Notes
+- Configure MySQL credentials in backend/.env; do not hardcode secrets in code.
+- CORS is enabled for http://localhost:5173 with credentials for refresh cookie.
+-- Mongoose schemas are used and collections will be created automatically when the server runs.

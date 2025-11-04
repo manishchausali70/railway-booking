@@ -1,26 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db/connection');
+const { Schema, model, Types } = require('mongoose');
 
-const Schedule = sequelize.define('Schedule', {
-    trainId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    departureTime: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    arrivalTime: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-    routeDetails: {
-        type: DataTypes.STRING,
-        allowNull: false
-    }
-}, {
-    tableName: 'schedules',
-    timestamps: false
-});
+const ScheduleSchema = new Schema({
+  trainId: { type: Types.ObjectId, ref: 'Train', required: true },
+  departureTime: { type: Date, required: true },
+  arrivalTime: { type: Date, required: true },
+  routeDetails: { type: String }
+}, { timestamps: true });
 
-module.exports = Schedule;
+module.exports = model('Schedule', ScheduleSchema);

@@ -1,47 +1,16 @@
-const mysql = require('mysql');
-const db = require('../db/connection');
+const { Schema, model, Types } = require('mongoose');
 
-const Booking = {
-    createBooking: (userId, trainId, seatNumber, callback) => {
-        const bookingStatus = 'confirmed';
-        const query = 'INSERT INTO bookings (user_id, train_id, seat_number, booking_status) VALUES (?, ?, ?, ?)';
-        db.query(query, [userId, trainId, seatNumber, bookingStatus], (error, results) => {
-            if (error) {
-                return callback(error);
-            }
-            callback(null, results.insertId);
-        });
-    },
+// Bookings: userId, trainId, passengerName, age, date, bookingTime (+ optional PNR/status)
+const BookingSchema = new Schema({
+  userId: { type: Types.ObjectId, ref: 'User', required: true },
+  trainId: { type: Types.ObjectId, ref: 'Train', required: true },
+  passengerName: { type: String, required: true, maxlength: 80 },
+  age: { type: Number, required: true, min: 0 },
+  date: { type: Date, required: true },
+  bookingStatus: { type: String, enum: ['confirmed', 'canceled'], default: 'confirmed' },
+  // Optional legacy fields
+  seatNumber: { type: String, default: null, maxlength: 10 },
+  pnr: { type: String, default: null, unique: false }
+}, { timestamps: true });
 
-    cancelBooking: (bookingId, callback) => {
-        const query = 'UPDATE bookings SET booking_status = ? WHERE id = ?';
-        db.query(query, ['canceled', bookingId], (error, results) => {
-            if (error) {
-                return callback(error);
-            }
-            callback(null, results.affectedRows);
-        });
-    },
-
-    getBooking: (bookingId, callback) => {
-        const query = 'SELECT * FROM bookings WHERE id = ?';
-        db.query(query, [bookingId], (error, results) => {
-            if (error) {
-                return callback(error);
-            }
-            callback(null, results[0]);
-        });
-    },
-
-    getUserBookings: (userId, callback) => {
-        const query = 'SELECT * FROM bookings WHERE user_id = ?';
-        db.query(query, [userId], (error, results) => {
-            if (error) {
-                return callback(error);
-            }
-            callback(null, results);
-        });
-    }
-};
-
-module.exports = Booking;
+module.exports = model('Booking', BookingSchema);

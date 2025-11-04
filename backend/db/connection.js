@@ -1,15 +1,18 @@
-const { Sequelize } = require('sequelize');
+// Mongoose connection
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-const sequelize = new Sequelize('railway_tracking_system', 'root', 'Gehu@7037', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306,
-    logging: console.log // helps debug database queries
+const MONGODB_URI = process.env.MONGODB_URI || process.env.DB_URI || 'mongodb://127.0.0.1:27017/railway_booking';
+
+mongoose.set('strictQuery', false);
+
+mongoose.connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('[DB] Connected to MongoDB');
+}).catch((err) => {
+    console.error('[DB] MongoDB connection error:', err.message);
 });
 
-// Test the connection
-sequelize.authenticate()
-    .then(() => console.log('Database connected successfully'))
-    .catch(err => console.error('Unable to connect to the database:', err));
-
-module.exports = sequelize;
+module.exports = mongoose;

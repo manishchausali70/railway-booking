@@ -4,7 +4,7 @@ const User = require('../models/user');
 exports.registerUser = async (req, res) => {
     const { username, password, contactInfo } = req.body;
     try {
-        const newUser = await User.create({ username, password, contactInfo });
+    const newUser = await User.create({ username, password, contactInfo });
         res.status(201).json({ message: 'User registered successfully', user: newUser });
     } catch (error) {
         res.status(500).json({ message: 'Error registering user', error });
@@ -15,7 +15,7 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     const { username, password } = req.body;
     try {
-        const user = await User.findOne({ where: { username } });
+        const user = await User.findOne({ username });
         if (!user || user.password !== password) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
@@ -29,7 +29,7 @@ exports.loginUser = async (req, res) => {
 exports.getUserProfile = async (req, res) => {
     const userId = req.params.id;
     try {
-        const user = await User.findByPk(userId);
+    const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -44,12 +44,11 @@ exports.updateUserProfile = async (req, res) => {
     const userId = req.params.id;
     const updates = req.body;
     try {
-        const [updated] = await User.update(updates, { where: { userId } });
+        const updated = await User.findByIdAndUpdate(userId, updates, { new: true });
         if (!updated) {
             return res.status(404).json({ message: 'User not found' });
         }
-        const updatedUser = await User.findByPk(userId);
-        res.status(200).json({ message: 'Profile updated successfully', user: updatedUser });
+        res.status(200).json({ message: 'Profile updated successfully', user: updated });
     } catch (error) {
         res.status(500).json({ message: 'Error updating profile', error });
     }
@@ -59,7 +58,7 @@ exports.updateUserProfile = async (req, res) => {
 exports.deleteUserAccount = async (req, res) => {
     const userId = req.params.id;
     try {
-        const deleted = await User.destroy({ where: { userId } });
+        const deleted = await User.findByIdAndDelete(userId);
         if (!deleted) {
             return res.status(404).json({ message: 'User not found' });
         }

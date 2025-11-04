@@ -30,6 +30,15 @@ nav a:hover {
     background: #e8491d;
 }
 
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
 .container {
     width: 80%;
     margin: auto;
@@ -73,4 +82,43 @@ footer {
 
 .button:hover {
     background-color: #35424a;
+}
+
+/* Forms */
+form {
+    background: #fff;
+    padding: 16px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    margin-top: 16px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+input, select, button[type="submit"] {
+    margin-top: 6px;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"], .btn-primary {
+    background-color: #e8491d;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover, .btn-primary:hover {
+    background-color: #c63e19;
 }

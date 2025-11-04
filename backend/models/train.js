@@ -1,31 +1,14 @@
-const mysql = require('mysql');
-const db = require('../db/connection');
+const { Schema, model } = require('mongoose');
 
-const Train = {
-    create: (trainData, callback) => {
-        const query = 'INSERT INTO trains (train_number, name, schedule_id) VALUES (?, ?, ?)';
-        db.query(query, [trainData.train_number, trainData.name, trainData.schedule_id], callback);
-    },
+// Trains: trainName, trainNumber, from, to, departure, arrival, fare
+const TrainSchema = new Schema({
+  trainNumber: { type: String, required: true, unique: true, maxlength: 10 },
+  trainName: { type: String, required: true, maxlength: 100 },
+  from: { type: String, required: true, maxlength: 80 },
+  to: { type: String, required: true, maxlength: 80 },
+  departure: { type: String, required: true, maxlength: 10 }, // e.g., 09:30
+  arrival: { type: String, required: true, maxlength: 10 },   // e.g., 17:45
+  fare: { type: Number, required: true, min: 0 }
+}, { timestamps: true });
 
-    getAll: (callback) => {
-        const query = 'SELECT * FROM trains';
-        db.query(query, callback);
-    },
-
-    getById: (trainId, callback) => {
-        const query = 'SELECT * FROM trains WHERE id = ?';
-        db.query(query, [trainId], callback);
-    },
-
-    update: (trainId, trainData, callback) => {
-        const query = 'UPDATE trains SET train_number = ?, name = ?, schedule_id = ? WHERE id = ?';
-        db.query(query, [trainData.train_number, trainData.name, trainData.schedule_id, trainId], callback);
-    },
-
-    delete: (trainId, callback) => {
-        const query = 'DELETE FROM trains WHERE id = ?';
-        db.query(query, [trainId], callback);
-    }
-};
-
-module.exports = Train;
+module.exports = model('Train', TrainSchema);
